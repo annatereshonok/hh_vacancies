@@ -1,7 +1,8 @@
-import os
 import json
+import os
+from typing import Any, Dict, List, Optional, Union
+
 import requests
-from typing import List, Dict, Any, Optional, Union
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_FOLDER = "data"

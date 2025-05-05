@@ -1,4 +1,5 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 from src.main import HeadHunterAPI
 
 
@@ -21,7 +22,6 @@ def test_get_vacancies(
     mock_find_id_by_name,
     mock_find_area_id_by_name,
 ):
-    # Мокаем ответ от requests.get()
     mock_response = MagicMock()
     mock_response.status_code = 200
     mock_response.json.side_effect = [
@@ -36,10 +36,9 @@ def test_get_vacancies(
         experience="Нет опыта",
         employment="Полная занятость",
         professional_roles="Программист, разработчик",
-        specializations="Разработка"
+        specializations="Разработка",
     )
 
-    # Проверяем результат
     assert isinstance(result, list)
     assert len(result) == 20
     assert result[0]["name"] == "Dev"

@@ -1,10 +1,11 @@
+import json
 import os
 from abc import ABC, abstractmethod
-import requests
-import json
-from typing import List, Dict, Hashable, Union, Optional
+from typing import Dict, Hashable, List, Optional, Union
 
-from src.utils import find_id_by_name, load_reference_data, find_area_id_by_name
+import requests
+
+from src.utils import find_area_id_by_name, find_id_by_name, load_reference_data
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_FOLDER = "data"
@@ -57,7 +58,7 @@ class HeadHunterAPI(BaseAPI):
         return None
 
     def get_vacancies(
-            self, text="", area=None, experience=None, employment=None, professional_roles=None, specializations=None
+        self, text="", area=None, experience=None, employment=None, professional_roles=None, specializations=None
     ):
         self.params["text"] = text
         if area:
@@ -113,8 +114,17 @@ class Vacancy:
     """
 
     __slots__ = (
-        "vacancy_id", "name", "url", "salary_from", "salary_to", "currency",
-        "description", "company", "area", "employment", "experience"
+        "vacancy_id",
+        "name",
+        "url",
+        "salary_from",
+        "salary_to",
+        "currency",
+        "description",
+        "company",
+        "area",
+        "employment",
+        "experience",
     )
 
     vacancy_id: int
@@ -131,18 +141,18 @@ class Vacancy:
     experience: str
 
     def __init__(
-            self,
-            vacancy_id,
-            name,
-            url,
-            salary_from=0,
-            salary_to=0,
-            currency="RUB",
-            description="",
-            company="",
-            area="",
-            employment="",
-            experience="",
+        self,
+        vacancy_id,
+        name,
+        url,
+        salary_from=0,
+        salary_to=0,
+        currency="RUB",
+        description="",
+        company="",
+        area="",
+        employment="",
+        experience="",
     ):
         self.__validate_string(name, "Название вакансии")
         self.__validate_url(url)

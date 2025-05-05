@@ -1,5 +1,7 @@
 import os
+
 import pytest
+
 from src.main import VacancyStorage
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -62,8 +64,22 @@ def test_prevent_duplicate_vacancies(storage):
 
 def test_get_vacancies_with_filter(storage):
     vacancies = [
-        {"vacancy_id": 1, "name": "Python Dev", "url": "http://url1", "salary_from": 100000, "salary_to": 150000, "currency": "RUB"},
-        {"vacancy_id": 2, "name": "Java Dev", "url": "http://url2", "salary_from": 80000, "salary_to": 120000, "currency": "RUB"},
+        {
+            "vacancy_id": 1,
+            "name": "Python Dev",
+            "url": "http://url1",
+            "salary_from": 100000,
+            "salary_to": 150000,
+            "currency": "RUB",
+        },
+        {
+            "vacancy_id": 2,
+            "name": "Java Dev",
+            "url": "http://url2",
+            "salary_from": 80000,
+            "salary_to": 120000,
+            "currency": "RUB",
+        },
     ]
     for v in vacancies:
         storage.add_vacancy(v)
@@ -71,4 +87,3 @@ def test_get_vacancies_with_filter(storage):
     filtered = storage.get_vacancies(name="Python Dev")
     assert len(filtered) == 1
     assert filtered[0]["vacancy_id"] == 1
-
