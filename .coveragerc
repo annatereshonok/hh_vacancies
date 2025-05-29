@@ -1,0 +1,5 @@
+[coverage:run]
+omit =
+    src/utils.py
+    src/storage.py
+    src/main.py

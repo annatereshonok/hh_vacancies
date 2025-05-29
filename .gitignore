@@ -172,3 +172,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+vacancies.json
+test_vacancies.json
+vacancies_raw.json
+
+tests
+.idea/
+htmlcov
