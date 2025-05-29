@@ -112,6 +112,14 @@ def load_reference_data() -> Dict[str, Any]:
     return reference_data
 
 
-if __name__ == "__main__":
-    reference_data = load_reference_data()
-    print(find_id_by_name(["Программист, разработчик"], reference_data["professional_roles"], nested_field="roles"))
+def load_companies_from_file(filename='companies.json'):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            companies = json.load(f)
+        return companies
+    except FileNotFoundError:
+        print(f"Файл {filename} не найден.")
+        return []
+    except json.JSONDecodeError:
+        print(f"Ошибка чтения JSON из файла {filename}.")
+        return []

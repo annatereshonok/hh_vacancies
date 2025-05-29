@@ -38,23 +38,48 @@
 
 ---
 
-### 4. `AbstractVacancyStorage` (абстрактный класс)
-Интерфейс хранилища вакансий:
-- `add_vacancy`
-- `get_vacancies`
-- `delete_vacancy`
+### 4. Company
+Класс компании с полями:
 
----
-
-### 5. `VacancyStorage`
-Реализация хранилища в JSON-файле.
+- `employer_id` — уникальный идентификатор компании на hh.ru
+- `name` — название компании
+- `site_url` — сайт компании
+- `region` — регион
+- `industries` — список отраслей
+- `trusted` — флаг, верифицирована ли компания
+- `description` — описание компании
+- `vacancies_url` — URL страницы с вакансиями
+- `hh_url` — ссылка на страницу компании на hh.ru
 
 Методы:
-- `add_vacancy(vacancy: Dict)`
-- `get_vacancies(**criteria)`
-- `delete_vacancy(vacancy_id: str|int)`
 
----
+- `from_json` — создание объекта из JSON (одной компании)
+- `new_companies_from_json` — создание списка компаний из JSON
+- `to_dict` — представление объекта в виде словаря
+- `__str__` — человекочитаемое представление объекта
+
+
+### 5. DBManager
+Класс для работы с базой данных PostgreSQL.
+
+Основные задачи:
+
+- Создание таблиц employers и vacancies
+- Сохранение данных о вакансиях и работодателях
+- Выполнение аналитических запросов
+
+Методы:
+
+- `__init__` — подключение к базе (использует .env)
+- `_create_employers_table` — создание таблицы компаний
+- `_create_vacancy_table` — создание таблицы вакансий
+- `_save_data` — сохранение списка объектов Company или Vacancy в БД
+- `get_companies_and_vacancies_count` — количество вакансий по компаниям
+- `get_all_vacancies` — все вакансии с зарплатами и ссылками
+- `get_avg_salary` — средняя зарплата
+- `get_vacancies_with_higher_salary` — вакансии с ЗП выше средней
+- `get_vacancies_with_keyword` — вакансии по ключевому слову
+- `_close` — закрытие соединения с БД
 
 ## Установка
 
@@ -62,49 +87,6 @@
 git clone <repo>
 cd hh-vacancies
 poetry install
-```
-
-## Пример использования
-
-```python
-api = HeadHunterAPI()
-vac_json = api.get_vacancies(text="python разработчик", area="Москва")
-vacancies = Vacancy.new_vacancies_from_json(vac_json)
-
-storage = VacancyStorage("vacancies.json")
-for v in vacancies:
-    storage.add_vacancy(v.__dict__)
-```
-
-## Тестирование
-
-Этот проект использует `pytest` для написания и запуска тестов.
-
-
-## Запуск тестов
-
-Для запуска всех тестов выполните следующую команду:
-
-```sh
-pytest
-```
-
-## Покрытие кода тестами
-
-Для проверки покрытия кода тестами можно использовать `pytest-cov`:
-
-```sh
-pytest --cov=src
-```
-
-Где `src` — папка с исходным кодом.
-
-## Логирование и отчеты
-
-Для генерации HTML-отчёта о покрытии выполните:
-
-```sh
-pytest --cov=src --cov-report=html
 ```
 
 ## Лицензия
